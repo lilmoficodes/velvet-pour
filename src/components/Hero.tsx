@@ -1,8 +1,12 @@
 import { useGSAP } from "@gsap/react"
 import gsap from "gsap";
 import { SplitText } from "gsap/all"
+import { useRef } from "react";
+import { useMediaQuery } from "react-responsive";
 
 const Hero = () => {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const isMobile = useMediaQuery({maxWidth : 767})
   useGSAP(()=>{
   const heroSplitText = new SplitText('.title', {type : 'words, chars'});
   const paraSplitText = new SplitText('.subtitle', {type : 'lines'});
@@ -31,8 +35,27 @@ const Hero = () => {
   });
   leaftimeLine.to(".right-leaf", {y : 200}, 0);
   leaftimeLine.to(".left-leaf", {y  : -200}, 0);
+  const startValue = isMobile ? "top 50%" : "center 60%";
+  const endValue = isMobile ? "120 top" : "bottom top"
+  // animate the video
+  const tl = gsap.timeline({
+    scrollTrigger : {
+      trigger  : "video",
+      pin : true,
+      scrub :  true,
+      start : startValue,
+      end : endValue,
+    }
+  })
+  if(videoRef.current)
+   videoRef.current.onloadedmetadata = () =>{
+   tl.to(videoRef.current, {
+    currentTime : videoRef.current?.duration,
+  })
+  }
   }, [])
   return (
+    <>
     <section className="noisy" id="hero">
       <h1 className="uppercase title">mojito</h1>
       <img src="images/hero-left-leaf.png" alt="left-leaf" className="left-leaf" />
@@ -55,6 +78,11 @@ const Hero = () => {
         </div>
       </div>
     </section>
+    <div className="video absolute inset-0">
+      <video ref={videoRef} src="/videos/input.mp4" muted preload="auto" playsInline/>
+    </div>
+    </>
+
   )
 }
 
