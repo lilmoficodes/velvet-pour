@@ -1,6 +1,12 @@
 @import url("https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@0;1&family=Mona+Sans:ital,wght@0,200..900;1,200..900&display=swap");
 
 @import "tailwindcss";
+::-webkit-scrollbar  {
+ width: 0;
+ height: 0;
+ display: none;
+ scrollbar-width: 0;
+}
 
 @font-face {
     font-family: "Modern Negra";
@@ -104,7 +110,7 @@ body {
         }
 
         .body {
-            @apply h-fit absolute bottom-0 flex items-end w-full;
+            @apply h-fit absolute lg:bottom-0 xl:bottom-0 md:bottom-0 md:flex items-end w-full;
 
             .content {
                 @apply flex lg:flex-row flex-col w-full gap-10 justify-between items-end lg:items-end mx-auto;

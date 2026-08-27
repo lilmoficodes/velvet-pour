@@ -40,7 +40,7 @@ const Hero = () => {
   // animate the video
   const tl = gsap.timeline({
     scrollTrigger : {
-      trigger  : "video",
+      trigger  : videoRef.current,
       pin : true,
       scrub :  true,
       start : startValue,
@@ -51,6 +51,7 @@ const Hero = () => {
    videoRef.current.onloadedmetadata = () =>{
    tl.to(videoRef.current, {
     currentTime : videoRef.current?.duration,
+    // wont set scrollTrigger here cuz its already in timeline
   })
   }
   }, [])
@@ -79,7 +80,7 @@ const Hero = () => {
       </div>
     </section>
     <div className="video absolute inset-0">
-      <video ref={videoRef} src="/videos/input.mp4" muted preload="auto" playsInline/>
+      <video ref={videoRef} src="/videos/output.mp4" muted preload="auto" playsInline/>
     </div>
     </>
 
